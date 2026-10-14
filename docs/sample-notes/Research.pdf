@@ -1,0 +1,41 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 600 400] /Rotate 0 /Resources << /Font << /F1 5 0 R >> >> /Contents 4 0 R >>
+endobj
+4 0 obj
+<< /Length 694 >>
+stream
+1 1 1 rg 0 0 600 400 re f
+0.09 0.14 0.22 rg 0 330 600 70 re f
+1 1 1 rg BT /F1 23 Tf 40 355 Td (Research review) Tj ET
+0.1 0.17 0.27 rg BT /F1 17 Tf 45 292 Td (Experiment completion by month) Tj ET
+0.4 0.45 0.5 rg BT /F1 11 Tf 45 270 Td (Local PDF source - project Atlas) Tj ET
+0.92 0.94 0.97 rg 45 100 510 150 re f
+0.24 0.5 0.85 rg 80 110 65 50 re f 190 110 65 80 re f 300 110 65 110 re f 410 110 65 130 re f
+0.15 0.22 0.31 rg BT /F1 12 Tf 95 88 Td (Jan) Tj 110 0 Td (Feb) Tj 110 0 Td (Mar) Tj 110 0 Td (Apr) Tj ET
+BT /F1 12 Tf 100 170 Td (12) Tj 110 30 Td (19) Tj 110 30 Td (26) Tj 110 20 Td (31) Tj ET
+0.45 0.5 0.55 rg BT /F1 10 Tf 45 35 Td (Source document / revision 1 / October 2026) Tj ET
+endstream
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+xref
+0 6
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000251 00000 n 
+0000000996 00000 n 
+trailer
+<< /Size 6 /Root 1 0 R >>
+startxref
+1066
+%%EOF

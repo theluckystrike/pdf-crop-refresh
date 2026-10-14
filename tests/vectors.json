@@ -1,0 +1,556 @@
+{
+  "slug": "pdf-crop-refresh",
+  "module": "pdf-crop-refresh/src/crop",
+  "function": "parseSource",
+  "cases": [
+    {
+      "name": "Selected wikilink",
+      "function": "parseSource",
+      "args": [
+        "[[A.pdf#page=1&rect=20,200,120,250]]"
+      ],
+      "expected": {
+        "path": "A.pdf",
+        "page": 1,
+        "rect": [
+          20,
+          200,
+          120,
+          250
+        ],
+        "scale": 1
+      }
+    },
+    {
+      "name": "Alias",
+      "function": "parseSource",
+      "args": [
+        "[[A.pdf#page=1&rect=20,200,120,250|source]]"
+      ],
+      "expected": {
+        "path": "A.pdf",
+        "page": 1,
+        "rect": [
+          20,
+          200,
+          120,
+          250
+        ],
+        "scale": 1
+      }
+    },
+    {
+      "name": "Embed",
+      "function": "parseSource",
+      "args": [
+        "![[A.pdf#page=1&rect=20,200,120,250]]"
+      ],
+      "expected": {
+        "path": "A.pdf",
+        "page": 1,
+        "rect": [
+          20,
+          200,
+          120,
+          250
+        ],
+        "scale": 1
+      }
+    },
+    {
+      "name": "Markdown",
+      "function": "parseSource",
+      "args": [
+        "[PDF](A.pdf#page=1&rect=20,200,120,250)"
+      ],
+      "expected": {
+        "path": "A.pdf",
+        "page": 1,
+        "rect": [
+          20,
+          200,
+          120,
+          250
+        ],
+        "scale": 1
+      }
+    },
+    {
+      "name": "Bare path",
+      "function": "parseSource",
+      "args": [
+        "A.pdf#page=1&rect=20,200,120,250"
+      ],
+      "expected": {
+        "path": "A.pdf",
+        "page": 1,
+        "rect": [
+          20,
+          200,
+          120,
+          250
+        ],
+        "scale": 1
+      }
+    },
+    {
+      "name": "Zero page",
+      "function": "parseSource",
+      "args": [
+        "A.pdf#page=0&rect=20,200,120,250"
+      ],
+      "expected": null
+    },
+    {
+      "name": "Fraction page",
+      "function": "parseSource",
+      "args": [
+        "A.pdf#page=1.5&rect=20,200,120,250"
+      ],
+      "expected": null
+    },
+    {
+      "name": "NaN rect",
+      "function": "parseSource",
+      "args": [
+        "A.pdf#page=1&rect=20,NaN,120,250"
+      ],
+      "expected": null
+    },
+    {
+      "name": "Missing rect",
+      "function": "parseSource",
+      "args": [
+        "A.pdf#page=1"
+      ],
+      "expected": null
+    },
+    {
+      "name": "Empty coordinate",
+      "function": "parseSource",
+      "args": [
+        "A.pdf#page=1&rect=20,,120,250"
+      ],
+      "expected": null
+    },
+    {
+      "name": "Reversed rect",
+      "function": "parseSource",
+      "args": [
+        "A.pdf#page=1&rect=120,200,20,250"
+      ],
+      "expected": null
+    },
+    {
+      "name": "Zero area",
+      "function": "parseSource",
+      "args": [
+        "A.pdf#page=1&rect=20,200,20,250"
+      ],
+      "expected": null
+    },
+    {
+      "name": "Remote source",
+      "function": "parseSource",
+      "args": [
+        "https://host/A.pdf#page=1&rect=20,200,120,250"
+      ],
+      "expected": null
+    },
+    {
+      "name": "Traversal",
+      "function": "parseSource",
+      "args": [
+        "../A.pdf#page=1&rect=20,200,120,250"
+      ],
+      "expected": null
+    },
+    {
+      "name": "Duplicate page",
+      "function": "parseSource",
+      "args": [
+        "A.pdf#page=1&page=2&rect=20,200,120,250"
+      ],
+      "expected": null
+    },
+    {
+      "name": "Huge scale",
+      "function": "parseSource",
+      "args": [
+        "A.pdf#page=1&rect=20,200,120,250&scale=10"
+      ],
+      "expected": null
+    },
+    {
+      "name": "Encoded Markdown",
+      "function": "parseSource",
+      "args": [
+        "[PDF](A%20B.pdf#page=1&rect=20,200,120,250)"
+      ],
+      "expected": {
+        "path": "A B.pdf",
+        "page": 1,
+        "rect": [
+          20,
+          200,
+          120,
+          250
+        ],
+        "scale": 1
+      }
+    },
+    {
+      "name": "Link scale",
+      "function": "parseSource",
+      "args": [
+        "[[A.pdf#page=1&rect=20,200,120,250&scale=2]]"
+      ],
+      "expected": {
+        "path": "A.pdf",
+        "page": 1,
+        "rect": [
+          20,
+          200,
+          120,
+          250
+        ],
+        "scale": 2
+      }
+    },
+    {
+      "name": "300 point page crop",
+      "function": "testBounds",
+      "args": [
+        [
+          20,
+          200,
+          120,
+          250
+        ],
+        0,
+        1
+      ],
+      "expected": {
+        "x": 20,
+        "y": 50,
+        "width": 100,
+        "height": 50
+      }
+    },
+    {
+      "name": "90 degree rotation",
+      "function": "testBounds",
+      "args": [
+        [
+          20,
+          200,
+          120,
+          250
+        ],
+        90,
+        1
+      ],
+      "expected": {
+        "x": 200,
+        "y": 20,
+        "width": 50,
+        "height": 100
+      }
+    },
+    {
+      "name": "180 degree rotation",
+      "function": "testBounds",
+      "args": [
+        [
+          20,
+          200,
+          120,
+          250
+        ],
+        180,
+        1
+      ],
+      "expected": {
+        "x": 180,
+        "y": 200,
+        "width": 100,
+        "height": 50
+      }
+    },
+    {
+      "name": "Scale two",
+      "function": "testBounds",
+      "args": [
+        [
+          20,
+          200,
+          120,
+          250
+        ],
+        0,
+        2
+      ],
+      "expected": {
+        "x": 40,
+        "y": 100,
+        "width": 200,
+        "height": 100
+      }
+    },
+    {
+      "name": "Source content changed",
+      "function": "changed",
+      "args": [
+        {
+          "path": "A.pdf",
+          "page": 1,
+          "rect": [
+            20,
+            200,
+            120,
+            250
+          ],
+          "scale": 1,
+          "image": "PDF crops/crop.png",
+          "sourceMtime": 100,
+          "sourceSize": 30,
+          "renderedAt": 100
+        },
+        {
+          "mtime": 101,
+          "size": 30
+        }
+      ],
+      "expected": true
+    },
+    {
+      "name": "Source size changed",
+      "function": "changed",
+      "args": [
+        {
+          "path": "A.pdf",
+          "page": 1,
+          "rect": [
+            20,
+            200,
+            120,
+            250
+          ],
+          "scale": 1,
+          "image": "PDF crops/crop.png",
+          "sourceMtime": 100,
+          "sourceSize": 30,
+          "renderedAt": 100
+        },
+        {
+          "mtime": 100,
+          "size": 31
+        }
+      ],
+      "expected": true
+    },
+    {
+      "name": "Unchanged source",
+      "function": "changed",
+      "args": [
+        {
+          "path": "A.pdf",
+          "page": 1,
+          "rect": [
+            20,
+            200,
+            120,
+            250
+          ],
+          "scale": 1,
+          "image": "PDF crops/crop.png",
+          "sourceMtime": 100,
+          "sourceSize": 30,
+          "renderedAt": 100
+        },
+        {
+          "mtime": 100,
+          "size": 30
+        }
+      ],
+      "expected": false
+    },
+    {
+      "name": "Duplicate image conflict",
+      "function": "conflict",
+      "args": [
+        [
+          {
+            "path": "A.pdf",
+            "page": 1,
+            "rect": [
+              20,
+              200,
+              120,
+              250
+            ],
+            "scale": 1,
+            "image": "PDF crops/crop.png",
+            "sourceMtime": 100,
+            "sourceSize": 30,
+            "renderedAt": 100
+          },
+          {
+            "path": "B.pdf",
+            "page": 1,
+            "rect": [
+              20,
+              200,
+              120,
+              250
+            ],
+            "scale": 1,
+            "image": "PDF crops/crop.png",
+            "sourceMtime": 100,
+            "sourceSize": 30,
+            "renderedAt": 100
+          }
+        ],
+        "PDF crops/crop.png"
+      ],
+      "expected": true
+    },
+    {
+      "name": "Ordinary PNG is detected",
+      "function": "imageLinks",
+      "args": [
+        "![[ordinary.png]]"
+      ],
+      "expected": [
+        "ordinary.png"
+      ]
+    },
+    {
+      "name": "Image path stays unchanged",
+      "function": "insertion",
+      "args": [
+        {
+          "path": "A.pdf",
+          "page": 1,
+          "rect": [
+            20,
+            200,
+            120,
+            250
+          ],
+          "scale": 1,
+          "image": "PDF crops/crop.png",
+          "sourceMtime": 100,
+          "sourceSize": 30,
+          "renderedAt": 100
+        }
+      ],
+      "expected": "![[PDF crops/crop.png]]\n[[A.pdf#page=1&rect=20,200,120,250&scale=1|PDF source page 1]]"
+    },
+    {
+      "name": "Missing PDF preserves PNG",
+      "function": "refreshIssue",
+      "args": [
+        [
+          {
+            "path": "A.pdf",
+            "page": 1,
+            "rect": [
+              20,
+              200,
+              120,
+              250
+            ],
+            "scale": 1,
+            "image": "PDF crops/crop.png",
+            "sourceMtime": 100,
+            "sourceSize": 30,
+            "renderedAt": 100
+          }
+        ],
+        {
+          "path": "A.pdf",
+          "page": 1,
+          "rect": [
+            20,
+            200,
+            120,
+            250
+          ],
+          "scale": 1,
+          "image": "PDF crops/crop.png",
+          "sourceMtime": 100,
+          "sourceSize": 30,
+          "renderedAt": 100
+        },
+        false,
+        true
+      ],
+      "expected": "Missing source"
+    },
+    {
+      "name": "Page beyond numPages",
+      "function": "pageIssue",
+      "args": [
+        {
+          "path": "A.pdf",
+          "page": 2,
+          "rect": [
+            20,
+            200,
+            120,
+            250
+          ],
+          "scale": 1,
+          "image": "PDF crops/crop.png",
+          "sourceMtime": 100,
+          "sourceSize": 30,
+          "renderedAt": 100
+        },
+        1
+      ],
+      "expected": "Invalid source"
+    },
+    {
+      "name": "Missing image is not recreated",
+      "function": "refreshIssue",
+      "args": [
+        [
+          {
+            "path": "A.pdf",
+            "page": 1,
+            "rect": [
+              20,
+              200,
+              120,
+              250
+            ],
+            "scale": 1,
+            "image": "PDF crops/crop.png",
+            "sourceMtime": 100,
+            "sourceSize": 30,
+            "renderedAt": 100
+          }
+        ],
+        {
+          "path": "A.pdf",
+          "page": 1,
+          "rect": [
+            20,
+            200,
+            120,
+            250
+          ],
+          "scale": 1,
+          "image": "PDF crops/crop.png",
+          "sourceMtime": 100,
+          "sourceSize": 30,
+          "renderedAt": 100
+        },
+        true,
+        false
+      ],
+      "expected": "Missing image"
+    }
+  ]
+}

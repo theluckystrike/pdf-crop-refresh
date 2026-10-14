@@ -1,0 +1,24 @@
+.pdf-crop-report {
+	max-height: 70vh;
+	overflow: auto;
+}
+
+.pdf-crop-card {
+	border: 1px solid var(--background-modifier-border);
+	border-radius: var(--radius-m);
+	padding: 12px;
+	margin-bottom: 12px;
+}
+
+.pdf-crop-card p {
+	overflow-wrap: anywhere;
+	color: var(--text-muted);
+}
+
+.pdf-crop-card img {
+	display: block;
+	max-width: 100%;
+	max-height: 220px;
+	object-fit: contain;
+	background: #fff;
+}

@@ -1,0 +1,59 @@
+[
+  {
+    "feature": "source-link",
+    "caption": "A local PDF link with page and rectangle parameters.",
+    "note": "Crop review.md",
+    "eval": "(async()=>{const p=app.plugins.plugins['pdf-crop-refresh'];p.closeReport();p.pro.signOut();return 'ok';})()",
+    "wait": 700
+  },
+  {
+    "feature": "save-crop",
+    "caption": "The chart is saved as a PNG with a local PDF source.",
+    "eval": "(async()=>{const p=app.plugins.plugins['pdf-crop-refresh'];p.closeReport();p.pro.signOut(); p.rows=[]; const source=app.vault.getFileByPath('PDF Crop Refresh/Research.pdf'); const row=await p.createCrop('[[PDF Crop Refresh/Research.pdf#page=1&rect=40,75,560,315&scale=1]]','PDF Crop Refresh/Crop review.md'); window.__cropDemo=row; const note=app.vault.getFileByPath('PDF Crop Refresh/Crop review.md'); await app.vault.modify(note, '# Atlas research review\\n\\n## Experiment completion\\n\\n![['+row.image+']]\\n\\n[[PDF Crop Refresh/Research.pdf#page=1&rect=40,75,560,315|PDF source page 1]]\\n\\nThe chart stays beside the project decision. Refresh this PNG after the source PDF changes.\\n\\n## Decision\\n\\nContinue the April experiment plan. Keep the source page link with the evidence.'); await app.workspace.getLeaf(false).setViewState({type:'markdown',state:{file:note.path,mode:'preview'}});p.showReport('Crop saved',[{image:row.image,status:'Saved with source page link'}]);return 'ok';})()",
+    "wait": 700
+  },
+  {
+    "feature": "registry",
+    "caption": "The registry keeps the PDF path, page, rectangle, scale and image.",
+    "eval": "(async()=>{const p=app.plugins.plugins['pdf-crop-refresh'];p.closeReport();p.showReport('Crop registry',p.rows.map(r=>({image:r.image,status:'Saved source data'})));return 'ok';})()"
+  },
+  {
+    "feature": "refresh-note",
+    "caption": "Manual refresh replaces the crop at its saved image path.",
+    "eval": "(async()=>{const p=app.plugins.plugins['pdf-crop-refresh'];p.closeReport();const results=await p.refreshNote(app.vault.getFileByPath('PDF Crop Refresh/Crop review.md')); p.showReport('Active note refresh',results);return 'ok';})()"
+  },
+  {
+    "feature": "folder-refresh",
+    "caption": "Pro refreshes registered crops in a selected note folder.",
+    "eval": "(async()=>{const p=app.plugins.plugins['pdf-crop-refresh'];p.closeReport();p.pro.opts.http = async () => ({ status: 200, json: { data: { viewer: { login: 'demo-reader' }, user: { sponsorshipForViewerAsSponsor: { isActive: true, isOneTimePayment: false, tier: { name: '$5 a month', monthlyPriceInCents: 500 } } } } } }); app.secretStorage.setSecret('pdf-crop-refresh-github-token', 'gho_' + '0'.repeat(36)); await p.pro.refreshNow();const results=await p.refreshFolder('PDF Crop Refresh'); if(!results.some(r=>r.status==='Refreshed'))throw new Error('The folder shot has no refreshed crop');p.showReport('Folder refresh (Pro)',results);return 'ok';})()",
+    "after": "app.plugins.plugins['pdf-crop-refresh'].pro.signOut(); 'ok'"
+  },
+  {
+    "feature": "changed-sources",
+    "caption": "Pro reports a crop whose source PDF changed after its last render.",
+    "eval": "(async()=>{const p=app.plugins.plugins['pdf-crop-refresh'];p.closeReport();p.pro.opts.http = async () => ({ status: 200, json: { data: { viewer: { login: 'demo-reader' }, user: { sponsorshipForViewerAsSponsor: { isActive: true, isOneTimePayment: false, tier: { name: '$5 a month', monthlyPriceInCents: 500 } } } } } }); app.secretStorage.setSecret('pdf-crop-refresh-github-token', 'gho_' + '0'.repeat(36)); await p.pro.refreshNow();p.rows[0].sourceMtime=1; p.showReport('Changed source PDFs (Pro)',p.changedSources());return 'ok';})()",
+    "after": "app.plugins.plugins['pdf-crop-refresh'].pro.signOut(); 'ok'"
+  },
+  {
+    "feature": "workflow",
+    "caption": "Save, inspect and refresh a local PDF crop.",
+    "frames": [
+      {
+        "eval": "(async()=>{const p=app.plugins.plugins['pdf-crop-refresh'];p.closeReport();p.pro.signOut(); p.rows=[]; const source=app.vault.getFileByPath('PDF Crop Refresh/Research.pdf'); const row=await p.createCrop('[[PDF Crop Refresh/Research.pdf#page=1&rect=40,75,560,315&scale=1]]','PDF Crop Refresh/Crop review.md'); window.__cropDemo=row; const note=app.vault.getFileByPath('PDF Crop Refresh/Crop review.md'); await app.vault.modify(note, '# Atlas research review\\n\\n## Experiment completion\\n\\n![['+row.image+']]\\n\\n[[PDF Crop Refresh/Research.pdf#page=1&rect=40,75,560,315|PDF source page 1]]\\n\\nThe chart stays beside the project decision. Refresh this PNG after the source PDF changes.\\n\\n## Decision\\n\\nContinue the April experiment plan. Keep the source page link with the evidence.'); await app.workspace.getLeaf(false).setViewState({type:'markdown',state:{file:note.path,mode:'preview'}});return 'ok';})()",
+        "hold": 1600
+      },
+      {
+        "eval": "(async()=>{const p=app.plugins.plugins['pdf-crop-refresh'];p.closeReport();p.showReport('Crop registry',p.rows.map(r=>({image:r.image,status:'Saved source data'})));return 'ok';})()",
+        "hold": 1600
+      },
+      {
+        "eval": "(async()=>{const p=app.plugins.plugins['pdf-crop-refresh'];p.closeReport();p.showReport('Active note refresh',await p.refreshNote(app.vault.getFileByPath('PDF Crop Refresh/Crop review.md')));return 'ok';})()",
+        "hold": 1600
+      },
+      {
+        "eval": "(async()=>{app.plugins.plugins['pdf-crop-refresh'].closeReport();return 'ok';})()",
+        "hold": 1000
+      }
+    ]
+  }
+]
