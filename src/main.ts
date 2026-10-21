@@ -5,6 +5,8 @@ import { SPONSORS, bindPro, isPro, resetPro } from './pro';
 import { DEFAULT_SETTINGS, PdfCropRefreshSettingTab, normalizeSettings, type PdfCropRefreshSettings } from './settings';
 import { changed, conflict, imageLinks, inFolder, insertion, parseSource, safePath, validSource, refreshIssue, type CropRow } from './crop';
 import { renderCrop } from './render';
+import { setupHello } from './hello/index';
+import WHATS_NEW from './whats-new.json';
 export interface Report { image: string; status: string }
 
 export default class PdfCropRefreshPlugin extends Plugin {
@@ -18,6 +20,8 @@ export default class PdfCropRefreshPlugin extends Plugin {
 	private unloaded = false;
 
 	async onload(): Promise<void> {
+		// First: "What's new" reads its state before the settings load (packages/hello). It does not wait.
+		setupHello(this, WHATS_NEW);
 		this.unloaded = false;
 		await this.loadSettings();
 		this.assertLoaded();

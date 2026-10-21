@@ -1,0 +1,27 @@
+{
+	"id": "pdf-crop-refresh",
+	"name": "PDF Crop Refresh",
+	"version": "1.1.0",
+	"changes": [
+		"New Send feedback command. It opens a page where you can report a problem or suggest an idea."
+	],
+	"tip": "After you replace a source PDF, run \"Refresh crops in active note\" to redraw the PNG images of that note.",
+	"thanks": "Hi, I am Michael, a solo developer in Poland. PDF Crop Refresh is one of over 100 small plugins that I make. Thank you for using it in your research notes.",
+	"related": [
+		{
+			"id": "annotation-inbox",
+			"name": "Annotation Inbox",
+			"blurb": "Import Hypothesis highlights, notes and tags without duplicates."
+		},
+		{
+			"id": "pdf-cover-cards",
+			"name": "PDF Cover Cards",
+			"blurb": "Show the first PDF page as a cover in your base."
+		},
+		{
+			"id": "pdf-reply-export",
+			"name": "PDF Reply Export",
+			"blurb": "Save PDF comments and replies in notes."
+		}
+	]
+}

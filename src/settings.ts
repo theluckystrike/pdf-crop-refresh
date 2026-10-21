@@ -3,6 +3,7 @@ import { sponsorsSettingItems } from './license/github-obsidian';
 import { PRO_UI } from './pro';
 import type PdfCropRefreshPlugin from './main';
 import { safePath } from './crop';
+import { helloSettingItems } from './hello/settings';
 export interface PdfCropRefreshSettings { scale: number; folder: string }
 export const DEFAULT_SETTINGS: PdfCropRefreshSettings = { scale: 1, folder: 'PDF crops' };
 export function normalizeSettings(saved: Partial<PdfCropRefreshSettings> | null | undefined): PdfCropRefreshSettings {
@@ -15,6 +16,11 @@ export function normalizeSettings(saved: Partial<PdfCropRefreshSettings> | null 
 export class PdfCropRefreshSettingTab extends PluginSettingTab {
 	constructor(app: ConstructorParameters<typeof PluginSettingTab>[0], public plugin: PdfCropRefreshPlugin) { super(app, plugin); }
 	getSettingDefinitions(): SettingDefinitionItem[] {
+		// The product rows, then the "More from NoteMods" card (packages/hello).
+		return [...this.productSettingDefinitions(), ...helloSettingItems()];
+	}
+
+	productSettingDefinitions(): SettingDefinitionItem[] {
 		return [
 			{ name: 'PNG folder', desc: 'Vault folder for new crops. Existing crops keep their paths.', control: { type: 'text', key: 'folder', defaultValue: DEFAULT_SETTINGS.folder } },
 			{ name: 'Render scale', desc: 'Pixels per PDF point, from 0.25 to 4. A scale in the link takes priority.', control: { type: 'slider', key: 'scale', defaultValue: 1, min: 0.25, max: 4, step: 0.25 } },

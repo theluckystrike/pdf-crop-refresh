@@ -66,6 +66,8 @@ Coordinates use PDF points, with the PDF origin near the lower left of an unrota
 
 ## Settings
 
+After a minor or major update, this plugin opens one What's new tab in the background. The tab and settings card suggest other NoteMods plugins and Zovo Chat and link to notemods.com for feedback ([privacy](https://notemods.com/privacy/)). The tab sends no data. Turn the tab off in Settings.
+
 "PNG folder" sets the vault folder for new images. The default is `PDF crops`. Changing it does not move existing images or change their registry paths. Nested folders are created when a new crop is saved.
 
 "Render scale" sets pixels per PDF point, from 0.25 to 4. The default is one. A `scale` parameter in the selected link takes priority. Larger scales make larger PNG images. A crop is refused if its canvas exceeds 8192 pixels on one side or 16 million pixels in area. The plugin creates a canvas for the crop bounds.
