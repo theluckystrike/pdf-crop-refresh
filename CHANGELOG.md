@@ -1,5 +1,11 @@
 # pdf-crop-refresh
 
+## 1.1.1
+
+### Patch Changes
+
+- The PDF Crop Refresh notice for a Pro feature now has a Sponsor on GitHub button.
+
 ## 1.1.0
 
 ### Minor Changes

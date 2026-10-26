@@ -1,7 +1,7 @@
 import { Notice, Plugin, Modal, SuggestModal, MarkdownView, normalizePath, type Editor, type TFile } from 'obsidian';
 import { createGitHubSponsors } from './license/github-obsidian';
 import type { SponsorsManager } from './license/index';
-import { SPONSORS, bindPro, isPro, resetPro } from './pro';
+import { SPONSORS, bindPro, isPro, resetPro, proNotice } from './pro';
 import { DEFAULT_SETTINGS, PdfCropRefreshSettingTab, normalizeSettings, type PdfCropRefreshSettings } from './settings';
 import { changed, conflict, imageLinks, inFolder, insertion, parseSource, safePath, validSource, refreshIssue, type CropRow } from './crop';
 import { renderCrop } from './render';
@@ -80,7 +80,7 @@ export default class PdfCropRefreshPlugin extends Plugin {
 	async saveSettings(): Promise<void> { this.assertLoaded(); await this.saveData({ settings: this.settings, rows: this.rows }); }
 	requirePro(): boolean {
 		if (isPro()) return true;
-		new Notice('This command needs pro. Open the plugin settings to sign in with GitHub.');
+		proNotice('This command needs pro.');
 		return false;
 	}
 	async run(fn: () => Promise<void>): Promise<void> {
