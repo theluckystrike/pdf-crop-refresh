@@ -1,8 +1,9 @@
 {
 	"id": "pdf-crop-refresh",
 	"name": "PDF Crop Refresh",
-	"version": "1.1.1",
+	"version": "1.1.2",
 	"changes": [
+		"The Pro notice of PDF Crop Refresh now says that one payment turns on Pro in every NoteMods plugin.",
 		"The PDF Crop Refresh notice for a Pro feature now has a Sponsor on GitHub button."
 	],
 	"tip": "After you replace a source PDF, run \"Refresh crops in active note\" to redraw the PNG images of that note.",
